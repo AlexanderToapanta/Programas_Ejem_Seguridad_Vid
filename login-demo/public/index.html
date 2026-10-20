@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Sistema Académico — Login (demo)</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 440px; margin: 60px auto; padding: 0 16px; }
+    h2 { margin-bottom: 4px; }
+    .sub { color: #555; font-size: 14px; margin-bottom: 20px; }
+    input, button { display: block; width: 100%; padding: 10px; margin: 8px 0; box-sizing: border-box; }
+    button { cursor: pointer; }
+    pre { background: #f4f4f4; padding: 10px; border-radius: 6px; white-space: pre-wrap; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h2>Sistema Académico (demo)</h2>
+  <p class="sub">Datos ficticios. No uses contraseñas reales.</p>
+
+  <input id="email" placeholder="Correo" value="ana@uni.edu.ec" />
+  <input id="password" type="password" placeholder="Contraseña" />
+  <button onclick="entrar()">Iniciar sesión</button>
+  <pre id="out"></pre>
+
+  <script>
+    const out = document.getElementById("out");
+    async function entrar() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const r = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await r.json();
+      out.textContent = `HTTP ${r.status}\n` + JSON.stringify(data, null, 2);
+      if (r.ok) {
+        const notas = await fetch("/notas", { headers: { Authorization: "Bearer " + data.token } });
+        out.textContent += "\n\n/notas → " + JSON.stringify(await notas.json(), null, 2);
+      }
+    }
+  </script>
+</body>
+</html>

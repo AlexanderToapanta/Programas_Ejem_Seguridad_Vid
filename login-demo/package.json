@@ -1,0 +1,19 @@
+{
+  "name": "login-demo",
+  "version": "1.0.0",
+  "description": "Demo de fuerza bruta en login para el video de conceptos básicos de seguridad",
+  "type": "module",
+  "scripts": {
+  "start": "node src/server.js",
+  "start:seguro": "cross-env MODO=seguro node src/server.js",
+  "test": "cross-env MODO=seguro node --test tests/",
+  "ataque": "node scripts/brute-force.js"
+},
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+  
+}
