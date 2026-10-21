@@ -3,7 +3,7 @@ import crypto from "node:crypto";
 import { usuarios, hash, notas } from "./db.js";
 
 
-const MAX_INTENTOS = 5;
+const MAX_INTENTOS = 3;
 const VENTANA_MS = 5 * 60 * 1000; 
 const intentos = new Map();
 
